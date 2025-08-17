@@ -1,0 +1,1245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Shib Earn Pro</title>
+
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+
+    <script src="https://ad.gigapub.tech/script?id=1827"></script>
+
+    <script type="text/javascript" src="https://cdn.tgads.space/assets/js/adexium-widget.min.js"></script>
+    
+    <script src='//libtl.com/sdk.js' data-zone='9726274' data-sdk='show_9726274'></script>
+
+
+    <style>
+        /* নতুন নীল থিম কাস্টম CSS */
+        :root {
+            --theme-primary-blue: #0D82FF; /* আপনার দেওয়া ছবির মূল নীল রঙ */
+            --theme-dark-blue: #0059B3;
+            --theme-light-blue: #E6F3FF;
+            --shib-dark-grey: #1a1a1a;
+            --shib-light-grey: #f8f9fa;
+            --tg-theme-bg-color: #ffffff;
+            --tg-theme-text-color: var(--shib-dark-grey);
+            --tg-theme-button-color: var(--theme-primary-blue);
+            --tg-theme-button-text-color: #ffffff;
+            --tg-theme-hint-color: #6c757d;
+            --secondary-bg-color: #ffffff;
+            --border-color: #e9ecef;
+            --gradient-premium: linear-gradient(135deg, var(--theme-primary-blue) 0%, var(--theme-dark-blue) 100%);
+            --gradient-card: linear-gradient(145deg, #ffffff 0%, #f8f9fa 100%);
+            --shadow-premium: 0 8px 32px rgba(13, 130, 255, 0.25);
+            --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            padding-bottom: 80px;
+            background: linear-gradient(180deg, #f8f9fa 0%, #ffffff 100%);
+            color: var(--tg-theme-text-color);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 420px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            padding-top: 80px;
+        }
+
+        /* প্রিমিয়াম হেডার ডিজাইন */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 420px;
+            background: var(--gradient-premium);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 15px 20px;
+            z-index: 1000;
+            box-shadow: var(--shadow-premium);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 100%;
+        }
+
+        .header-profile {
+            display: flex;
+            align-items: center;
+            flex: 1;
+            min-width: 0;
+        }
+
+        .header-profile .profile-pic {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 12px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .header-profile .user-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .header-profile .user-info h3 {
+            margin: 0;
+            font-size: 16px;
+            font-weight: 700;
+            color: white;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .header-profile .user-info p {
+            margin: 0;
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.8);
+            font-weight: 500;
+        }
+
+        .header .balance-display {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            padding: 8px 12px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 14px;
+            font-weight: 700;
+            color: white;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            min-width: 0;
+            flex-shrink: 0;
+        }
+
+        .balance-display .shib-icon {
+            width: 18px;
+            height: 18px;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+        }
+
+        .view {
+            display: none;
+            flex-grow: 1;
+            padding: 20px;
+            animation: slideIn 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .view.active {
+            display: flex;
+            flex-direction: column;
+        }
+
+        @keyframes slideIn {
+            from { 
+                opacity: 0; 
+                transform: translateY(20px); 
+            }
+            to { 
+                opacity: 1; 
+                transform: translateY(0); 
+            }
+        }
+
+        /* প্রিমিয়াম কার্ড ডিজাইন */
+        .card {
+            background: var(--gradient-card);
+            padding: 24px;
+            border-radius: 20px;
+            box-shadow: var(--shadow-card);
+            margin-bottom: 20px;
+            border: 1px solid rgba(13, 130, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--gradient-premium);
+        }
+
+        .card h2 {
+            margin: 0 0 20px 0;
+            font-size: 20px;
+            font-weight: 700;
+            text-align: center;
+            color: var(--shib-dark-grey);
+        }
+
+        /* প্রিমিয়াম বাটন */
+        .btn {
+            width: 100%;
+            padding: 16px;
+            border: none;
+            border-radius: 16px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary {
+            background: var(--gradient-premium);
+            color: white;
+            box-shadow: var(--shadow-premium);
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 40px rgba(13, 130, 255, 0.3);
+        }
+
+        .btn-primary:active {
+            transform: translateY(-1px);
+        }
+
+        .btn:disabled {
+            background: #e9ecef;
+            color: #6c757d;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        /* হোম ভিউ স্ট্যাটস */
+        .balance-stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .stats-item-card {
+            padding: 24px 20px;
+            border-radius: 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow-card);
+        }
+
+        .stats-item-card.total-balance {
+            background: linear-gradient(135deg, var(--theme-primary-blue) 0%, var(--theme-dark-blue) 100%);
+            color: white;
+        }
+
+        .stats-item-card.total-earning {
+            background: linear-gradient(135deg, #43a0ff 0%, var(--theme-primary-blue) 100%);
+            color: white;
+        }
+
+        .stats-item-card .value {
+            font-size: 28px;
+            font-weight: 800;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .shib-logo {
+            width: 28px;
+            height: 28px;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+        }
+
+        .stats-item-card .label {
+            font-size: 14px;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        /* প্রিমিয়াম টাস্ক কার্ড */
+        .ads-task-card-large {
+            background: var(--gradient-card);
+            padding: 32px 24px;
+            border-radius: 24px;
+            text-align: center;
+            margin-bottom: 24px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            box-shadow: var(--shadow-card);
+            border: 1px solid rgba(13, 130, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .ads-task-card-large::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient-premium);
+        }
+
+        .ads-task-card-large:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 16px 48px rgba(13, 130, 255, 0.2);
+        }
+
+        .ads-task-card-large img {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 20px;
+            border-radius: 16px;
+        }
+
+        .ads-task-card-large h2 {
+            font-size: 22px;
+            font-weight: 800;
+            margin-bottom: 8px;
+            color: var(--shib-dark-grey);
+        }
+
+        .ads-task-card-large p {
+            font-size: 15px;
+            color: var(--tg-theme-hint-color);
+            margin-bottom: 24px;
+            font-weight: 500;
+        }
+
+        .task-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .task-card-small {
+            background: var(--gradient-card);
+            padding: 20px 16px;
+            border-radius: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            box-shadow: var(--shadow-card);
+            border: 1px solid rgba(13, 130, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .task-card-small::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--gradient-premium);
+        }
+
+        .task-card-small:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 32px rgba(13, 130, 255, 0.15);
+        }
+
+        .task-card-small img {
+            width: 48px;
+            height: 48px;
+            margin-bottom: 12px;
+            border-radius: 12px;
+        }
+
+        .task-card-small h3 {
+            font-size: 16px;
+            font-weight: 700;
+            margin: 0 0 6px 0;
+            color: var(--shib-dark-grey);
+        }
+
+        .task-card-small p {
+            font-size: 12px;
+            color: var(--tg-theme-hint-color);
+            margin: 0 0 12px 0;
+            font-weight: 500;
+        }
+
+        .task-card-small .reward {
+            font-size: 14px;
+            font-weight: 800;
+            color: var(--theme-primary-blue);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+        }
+
+        .task-card-small .reward .shib-mini {
+            width: 16px;
+            height: 16px;
+        }
+
+        /* ডেইলি বোনাস কার্ড */
+        .daily-bonus-card {
+            background: var(--gradient-premium);
+            padding: 32px 24px;
+            border-radius: 24px;
+            text-align: center;
+            margin-bottom: 24px;
+            box-shadow: var(--shadow-premium);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .daily-bonus-card::before {
+            content: '🎁';
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 24px;
+            opacity: 0.3;
+        }
+
+        .daily-bonus-card h2 {
+            font-size: 24px;
+            font-weight: 800;
+            color: white;
+            margin-bottom: 8px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .daily-bonus-card p {
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 24px;
+            font-weight: 600;
+        }
+
+        .daily-bonus-card .btn-primary {
+            background: rgba(255, 255, 255, 0.95);
+            color: var(--theme-primary-blue);
+            font-weight: 800;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+        }
+
+        /* অ্যাডস ভিউ */
+        .ads-task-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .ads-stats-item {
+            padding: 20px;
+            border-radius: 16px;
+            background: var(--gradient-card);
+            box-shadow: var(--shadow-card);
+            text-align: center;
+            border: 1px solid rgba(13, 130, 255, 0.1);
+        }
+
+        .ads-stats-item .value {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--theme-primary-blue);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            margin-bottom: 8px;
+        }
+
+        .ads-stats-item .label {
+            font-size: 12px;
+            color: var(--tg-theme-hint-color);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* উইথড্র ভিউ */
+        .withdraw-balance-card {
+            background: var(--gradient-premium);
+            color: white;
+            padding: 24px;
+            border-radius: 20px;
+            margin-bottom: 24px;
+            text-align: center;
+            font-size: 18px;
+            font-weight: 700;
+            box-shadow: var(--shadow-premium);
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 14px;
+            color: var(--shib-dark-grey);
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 16px;
+            background-color: #ffffff;
+            border: 2px solid #e9ecef;
+            border-radius: 12px;
+            color: #1a1a1a;
+            font-size: 16px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: var(--theme-primary-blue);
+            background-color: #ffffff;
+            box-shadow: 0 0 0 4px rgba(13, 130, 255, 0.1);
+            color: #1a1a1a;
+        }
+
+        .input-group input::placeholder {
+            color: #6c757d;
+            opacity: 1;
+        }
+
+        .amount-input-group {
+            display: flex;
+            align-items: center;
+        }
+
+        .amount-input-group input {
+            border-radius: 12px 0 0 12px;
+        }
+
+        .amount-input-group .unit {
+            padding: 16px 20px;
+            background: var(--gradient-premium);
+            color: white;
+            border-radius: 0 12px 12px 0;
+            font-size: 16px;
+            font-weight: 700;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        /* প্রোফাইল ভিউ */
+        .profile-card {
+            text-align: center;
+            position: relative;
+        }
+
+        .profile-card .profile-pic-large {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid var(--theme-primary-blue);
+            margin-bottom: 16px;
+            box-shadow: 0 8px 24px rgba(13, 130, 255, 0.3);
+        }
+
+        .profile-card .profile-name {
+            font-size: 24px;
+            font-weight: 800;
+            margin: 0 0 8px 0;
+            color: var(--shib-dark-grey);
+        }
+
+        .profile-card .join-date {
+            font-size: 14px;
+            color: var(--tg-theme-hint-color);
+            font-weight: 500;
+        }
+
+        .stats-grid-profile {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 24px;
+        }
+
+        .stats-item-profile {
+            padding: 20px;
+            border-radius: 16px;
+            background: var(--gradient-card);
+            box-shadow: var(--shadow-card);
+            text-align: center;
+            border: 1px solid rgba(13, 130, 255, 0.1);
+        }
+
+        .stats-item-profile .value {
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--theme-primary-blue);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            margin-bottom: 8px;
+        }
+
+        .stats-item-profile .label {
+            font-size: 11px;
+            color: var(--tg-theme-hint-color);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* রেফারেল বক্স */
+        .referral-box {
+            background: var(--gradient-card);
+            padding: 24px;
+            border-radius: 20px;
+            border: 2px dashed var(--theme-primary-blue);
+            text-align: center;
+            margin-top: 24px;
+            box-shadow: var(--shadow-card);
+        }
+
+        .referral-box h4 {
+            margin: 0 0 12px 0;
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--shib-dark-grey);
+        }
+
+        .referral-link-container {
+            display: flex;
+            align-items: center;
+            background: white;
+            border: 2px solid var(--theme-primary-blue);
+            border-radius: 12px;
+            padding: 12px;
+            margin-top: 16px;
+        }
+
+        #referralLink {
+            font-size: 13px;
+            word-break: break-all;
+            color: var(--shib-dark-grey);
+            flex-grow: 1;
+            font-weight: 500;
+        }
+
+        .copy-btn {
+            background: var(--theme-primary-blue);
+            border: none;
+            color: white;
+            cursor: pointer;
+            margin-left: 12px;
+            padding: 8px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .copy-btn:hover {
+            background: var(--theme-dark-blue);
+            transform: scale(1.05);
+        }
+
+        /* প্রিমিয়াম ফুটার নেভিগেশন */
+        .footer-nav {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 420px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            display: flex;
+            justify-content: space-around;
+            padding: 12px 0 20px 0;
+            box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.1);
+            border-top: 1px solid rgba(13, 130, 255, 0.2);
+            z-index: 1000;
+        }
+
+        .nav-btn {
+            background: none;
+            border: none;
+            color: var(--tg-theme-hint-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-size: 11px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            flex: 1;
+            padding: 8px;
+            border-radius: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .nav-btn.active {
+            color: var(--theme-primary-blue);
+            background: var(--theme-light-blue);
+            transform: translateY(-2px);
+        }
+
+        .nav-btn .icon {
+            width: 24px;
+            height: 24px;
+            margin-bottom: 6px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-btn.active .icon {
+            transform: scale(1.1);
+        }
+
+        /* লোডিং অ্যানিমেশন */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="header-content">
+                <div class="header-profile">
+                    <img id="headerProfilePic" src="https://i.ibb.co/L5k6v7R/default-profile.jpg" alt="Profile" class="profile-pic">
+                    <div class="user-info">
+                        <h3 id="userName">Users</h3>
+                        <p id="userBalanceText">Available Balance</p>
+                    </div>
+                </div>
+                <div class="balance-display">
+                    <img src="shiba-inu.png" alt="SHIB" class="shib-icon">
+                    <span id="headerBalanceValue">0</span>
+                </div>
+            </div>
+        </div>
+
+        <div id="home-view" class="view active">
+            <div class="balance-stats-grid">
+                <div class="card stats-item-card total-balance">
+                    <div class="value">
+                        <img src="shiba-inu.png" alt="SHIB" class="shib-logo">
+                        <span id="totalBalanceAmount">0</span>
+                    </div>
+                    <div class="label">Total Balance</div>
+                </div>
+                <div class="card stats-item-card total-earning">
+                    <div class="value">
+                        <img src="shiba-inu.png" alt="SHIB" class="shib-logo">
+                        <span id="totalEarningsAmount">0</span>
+                    </div>
+                    <div class="label">Total Earning</div>
+                </div>
+            </div>
+
+            <div class="ads-task-card-large" onclick="showView('ads-view')">
+                <img src="google-ads.png" alt="Watch Ads">
+                <h2>📺 Watch Ads & Earn</h2>
+                <p>Watch short video ads and earn 40 SHIB instantly!</p>
+                <button class="btn btn-primary">Start Earning →</button>
+            </div>
+
+            <div class="task-grid">
+                <div class="task-card-small" onclick="showView('tasks-view')">
+                    <img src="check.png" alt="Daily Tasks">
+                    <h3>✅ Daily Tasks</h3>
+                    <p>Complete simple tasks</p>
+                    <div class="reward">
+                        <img src="shiba-inu.png" alt="SHIB" class="shib-mini">
+                        <span>50 SHIB</span>
+                    </div>
+                </div>
+                <div class="task-card-small" onclick="showView('referral-view')">
+                    <img src="refer.png" alt="Referrals">
+                    <h3>🤝 Referrals</h3>
+                    <p>Invite friends & earn</p>
+                    <div class="reward">
+                        <img src="shiba-inu.png" alt="SHIB" class="shib-mini">
+                        <span>100 SHIB</span>
+                    </div>
+                </div>
+                <div class="task-card-small" onclick="showView('social-view')">
+                    <img src="telegram.png" alt="Social Tasks">
+                    <h3>📱 Social Tasks</h3>
+                    <p>Follow & subscribe</p>
+                    <div class="reward">
+                        <img src="shiba-inu.png" alt="SHIB" class="shib-mini">
+                        <span>75 SHIB</span>
+                    </div>
+                </div>
+                <div class="task-card-small" onclick="showView('trading-view')">
+                    <img src="binance.png" alt="Trading Tasks">
+                    <h3>📈 Trading</h3>
+                    <p>Complete trades</p>
+                    <div class="reward">
+                        <img src="shiba-inu.png" alt="SHIB" class="shib-mini">
+                        <span>200 SHIB</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="daily-bonus-card">
+                <h2>👑 Daily Bonus Reward! 👑</h2>
+                <p>Claim your free 25 SHIB every day!</p>
+                <button class="btn btn-primary" id="claimBonusBtn">Claim Daily Bonus</button>
+            </div>
+        </div>
+
+        <div id="ads-view" class="view">
+            <div class="card">
+                <h2>📺 Ads Task Center</h2>
+                <div class="ads-task-details">
+                    <div class="ads-stats-item">
+                        <div class="value" id="dailyTasksCompleted">0/50</div>
+                        <div class="label">Daily Progress</div>
+                    </div>
+                    <div class="ads-stats-item">
+                        <div class="value">
+                            <img src="shiba-inu.png" alt="SHIB" class="shib-logo">
+                            <span id="adsCurrentBalance">0</span>
+                        </div>
+                        <div class="label">Current Balance</div>
+                    </div>
+                    <div class="ads-stats-item">
+                        <div class="value" id="lifetimeTasks">0</div>
+                        <div class="label">Total Ads</div>
+                    </div>
+                    <div class="ads-stats-item">
+                        <div class="value">
+                            <img src="shiba-inu.png" alt="SHIB" class="shib-logo">
+                            <span id="adsTotalEarnings">0</span>
+                        </div>
+                        <div class="label">Total Earned</div>
+                    </div>
+                </div>
+            </div>
+            <button class="btn btn-primary" id="startAdTaskBtn">
+                🎬 Watch Ad & Earn 40 SHIB
+            </button>
+        </div>
+
+        <div id="withdraw-view" class="view">
+            <div class="withdraw-balance-card">
+                💰 Current Balance: <b id="withdrawBalance">0</b> SHIB
+            </div>
+            <div class="card withdraw-card">
+                <h2>💸 Withdraw Funds</h2>
+                
+                <div class="input-group">
+                    <label for="withdrawAmount">💵 Withdrawal Amount</label>
+                    <div class="amount-input-group">
+                        <input type="number" id="withdrawAmount" placeholder="Minimum 500 SHIB" min="500">
+                        <span class="unit">SHIB</span>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label for="binanceId">🏦 Binance User ID</label>
+                    <input type="text" id="binanceId" placeholder="Enter your Binance User ID">
+                </div>
+            </div>
+            <button class="btn btn-primary" id="requestWithdrawalBtn">
+                🚀 Request Withdrawal
+            </button>
+        </div>
+        
+        <div id="profile-view" class="view">
+            <div class="card profile-card">
+                <img id="profilePagePic" src="https://i.ibb.co/L5k6v7R/default-profile.jpg" alt="Profile" class="profile-pic-large">
+                <h3 class="profile-name" id="profileName">Users</h3>
+                <p class="join-date">🗓️ Joined August 17, 2025</p>
+                <div class="stats-grid-profile">
+                    <div class="stats-item-profile">
+                        <div class="value">
+                            <img src="shiba-inu.png" alt="SHIB" class="shib-logo">
+                            <span id="profileTotalEarned">0</span>
+                        </div>
+                        <div class="label">Total Earned</div>
+                    </div>
+                    <div class="stats-item-profile">
+                        <div class="value" id="profileTasksDone">0</div>
+                        <div class="label">Tasks Done</div>
+                    </div>
+                    <div class="stats-item-profile">
+                        <div class="value">
+                            <img src="shiba-inu.png" alt="SHIB" class="shib-logo">
+                            <span id="profileBalance">0</span>
+                        </div>
+                        <div class="label">My Balance</div>
+                    </div>
+                    <div class="stats-item-profile">
+                        <div class="value" id="profileReferrals">0</div>
+                        <div class="label">Referrals</div>
+                    </div>
+                </div>
+            </div>
+            <div class="card referral-box">
+                <h4>🎁 Referral Program</h4>
+                <p>Invite friends and get 10% of their earnings for life!</p>
+                <div class="referral-link-container">
+                    <span id="referralLink">Loading...</span>
+                    <button class="copy-btn" id="copyLinkBtn">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer-nav">
+        <button class="nav-btn active" data-view="home-view">
+            <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+            </svg>
+            <span>Home</span>
+        </button>
+        <button class="nav-btn" data-view="ads-view">
+            <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M21 3H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H3V5h18v14zM4 6h9v7H4z"/>
+            </svg>
+            <span>Ads</span>
+        </button>
+        <button class="nav-btn" data-view="withdraw-view">
+            <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M11.8 10.9c-2.27-.59-3-1.2-3-2.15 0-1.09 1.01-1.85 2.7-1.85 1.78 0 2.44.85 2.5 2.1h2.21c-.07-1.72-1.12-3.3-3.21-3.81V3h-3v2.16c-1.94.42-3.5 1.68-3.5 3.61 0 2.31 1.91 3.46 4.7 4.13 2.5.6 3 1.48 3 2.41 0 .69-.49 1.79-2.7 1.79-2.06 0-2.87-.92-2.98-2.1h-2.2c.12 2.19 1.76 3.42 3.68 3.83V21h3v-2.15c1.95-.37 3.5-1.5 3.5-3.55 0-2.84-2.43-3.81-4.7-4.4z"/>
+            </svg>
+            <span>Withdraw</span>
+        </button>
+        <button class="nav-btn" data-view="profile-view">
+            <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.93 0 3.5 1.57 3.5 3.5S13.93 12 12 12s-3.5-1.57-3.5-3.5S10.07 5 12 5zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
+            </svg>
+            <span>Profile</span>
+        </button>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const tg = window.Telegram.WebApp;
+            tg.ready();
+            tg.expand();
+
+            const defaultProfilePic = 'https://i.ibb.co/L5k6v7R/default-profile.jpg';
+            const botUsername = 'Airdrop_zon_Bot'; // আপনার দেওয়া বটের ইউজারনেম
+
+            let appState = JSON.parse(localStorage.getItem('appState')) || {
+                balance: 0,
+                totalEarnings: 0,
+                adsWatched: 0,
+                dailyTasksCompleted: 0,
+                dailyTaskLimit: 50,
+                referrals: 0,
+                lastBonusClaim: null,
+                userId: null
+            };
+
+            const userData = tg.initDataUnsafe.user;
+            
+            if (userData && userData.id) {
+                appState.userId = userData.id;
+                saveState();
+            }
+
+            const elements = {
+                headerProfilePic: document.getElementById('headerProfilePic'),
+                userName: document.getElementById('userName'),
+                headerBalanceValue: document.getElementById('headerBalanceValue'),
+                totalBalanceAmount: document.getElementById('totalBalanceAmount'),
+                totalEarningsAmount: document.getElementById('totalEarningsAmount'),
+                dailyTasksCompleted: document.getElementById('dailyTasksCompleted'),
+                adsCurrentBalance: document.getElementById('adsCurrentBalance'),
+                lifetimeTasks: document.getElementById('lifetimeTasks'),
+                adsTotalEarnings: document.getElementById('adsTotalEarnings'),
+                startAdTaskBtn: document.getElementById('startAdTaskBtn'),
+                adsTaskCard: document.querySelector('.ads-task-card-large'),
+                referralLink: document.getElementById('referralLink'),
+                copyLinkBtn: document.getElementById('copyLinkBtn'),
+                withdrawBalance: document.getElementById('withdrawBalance'),
+                withdrawAmount: document.getElementById('withdrawAmount'),
+                binanceId: document.getElementById('binanceId'),
+                requestWithdrawalBtn: document.getElementById('requestWithdrawalBtn'),
+                profilePagePic: document.getElementById('profilePagePic'),
+                profileName: document.getElementById('profileName'),
+                profileTotalEarned: document.getElementById('profileTotalEarned'),
+                profileTasksDone: document.getElementById('profileTasksDone'),
+                profileBalance: document.getElementById('profileBalance'),
+                profileReferrals: document.getElementById('profileReferrals'),
+                navItems: document.querySelectorAll('.footer-nav .nav-btn'),
+                views: document.querySelectorAll('.view'),
+                claimBonusBtn: document.getElementById('claimBonusBtn')
+            };
+
+            function saveState() {
+                localStorage.setItem('appState', JSON.stringify(appState));
+            }
+            
+            function isSameDay(d1, d2) {
+                return d1.getFullYear() === d2.getFullYear() &&
+                       d1.getMonth() === d2.getMonth() &&
+                       d1.getDate() === d2.getDate();
+            }
+
+            function updateUI() {
+                if (userData) {
+                    const fullName = `${userData.first_name || ''} ${userData.last_name || ''}`.trim() || 'User';
+                    elements.headerProfilePic.src = userData.photo_url || defaultProfilePic;
+                    elements.profilePagePic.src = userData.photo_url || defaultProfilePic;
+                    elements.userName.textContent = fullName;
+                    elements.profileName.textContent = fullName;
+                } else {
+                    elements.headerProfilePic.src = defaultProfilePic;
+                    elements.profilePagePic.src = defaultProfilePic;
+                    elements.userName.textContent = 'Users';
+                    elements.profileName.textContent = 'Users';
+                }
+
+                elements.headerBalanceValue.textContent = appState.balance.toLocaleString();
+                elements.totalBalanceAmount.textContent = appState.balance.toLocaleString();
+                elements.totalEarningsAmount.textContent = appState.totalEarnings.toLocaleString();
+                elements.dailyTasksCompleted.textContent = `${appState.dailyTasksCompleted}/${appState.dailyTaskLimit}`;
+                elements.adsCurrentBalance.textContent = appState.balance.toLocaleString();
+                elements.lifetimeTasks.textContent = appState.adsWatched.toLocaleString();
+                elements.adsTotalEarnings.textContent = appState.totalEarnings.toLocaleString();
+                elements.withdrawBalance.textContent = appState.balance.toLocaleString();
+                elements.profileTotalEarned.textContent = appState.totalEarnings.toLocaleString();
+                elements.profileTasksDone.textContent = appState.adsWatched.toLocaleString();
+                elements.profileBalance.textContent = appState.balance.toLocaleString();
+                elements.profileReferrals.textContent = appState.referrals.toLocaleString();
+                
+                if (userData) {
+                    elements.referralLink.textContent = `https://t.me/${botUsername}?startapp=ref${userData.id}`;
+                } else {
+                    elements.referralLink.textContent = 'Join the bot to get your referral link!';
+                    elements.copyLinkBtn.style.display = 'none';
+                }
+
+                const minWithdrawal = 500;
+                if (appState.balance >= minWithdrawal) {
+                    elements.requestWithdrawalBtn.disabled = false;
+                    elements.requestWithdrawalBtn.innerHTML = '🚀 Request Withdrawal';
+                } else {
+                    elements.requestWithdrawalBtn.disabled = true;
+                    elements.requestWithdrawalBtn.innerHTML = `💰 Min ${minWithdrawal.toLocaleString()} SHIB Required`;
+                }
+
+                const today = new Date();
+                const lastClaim = appState.lastBonusClaim ? new Date(appState.lastBonusClaim) : null;
+                if (lastClaim && isSameDay(today, lastClaim)) {
+                    elements.claimBonusBtn.disabled = true;
+                    elements.claimBonusBtn.innerHTML = '✅ Claimed Today';
+                } else {
+                    elements.claimBonusBtn.disabled = false;
+                    elements.claimBonusBtn.innerHTML = '🎁 Claim Daily Bonus';
+                }
+
+                if (appState.dailyTasksCompleted >= appState.dailyTaskLimit) {
+                    elements.startAdTaskBtn.disabled = true;
+                    elements.startAdTaskBtn.innerHTML = '⏰ Daily Limit Reached';
+                } else {
+                    elements.startAdTaskBtn.disabled = false;
+                    elements.startAdTaskBtn.innerHTML = '🎬 Watch Ad & Earn 40 SHIB';
+                }
+                saveState();
+            }
+
+            window.showView = (viewId) => {
+                elements.views.forEach(view => view.classList.remove('active'));
+                document.getElementById(viewId).classList.add('active');
+                elements.navItems.forEach(item => item.classList.remove('active'));
+                const activeNavBtn = document.querySelector(`.nav-btn[data-view="${viewId}"]`);
+                if(activeNavBtn) activeNavBtn.classList.add('active');
+            };
+
+            elements.navItems.forEach(item => {
+                item.addEventListener('click', () => {
+                    const viewId = item.getAttribute('data-view');
+                    showView(viewId);
+                });
+            });
+
+            elements.adsTaskCard.addEventListener('click', () => {
+                showView('ads-view');
+            });
+
+            elements.copyLinkBtn.addEventListener('click', () => {
+                const referralLinkText = elements.referralLink.textContent;
+                navigator.clipboard.writeText(referralLinkText)
+                    .then(() => {
+                        tg.showAlert('🎉 Referral link copied to clipboard!');
+                        tg.HapticFeedback.notificationOccurred('success');
+                    })
+                    .catch(() => tg.showAlert('❌ Failed to copy link.'));
+            });
+
+            elements.startAdTaskBtn.addEventListener('click', () => {
+                const adReward = 40;
+                if (appState.dailyTasksCompleted < appState.dailyTaskLimit) {
+                    elements.startAdTaskBtn.disabled = true;
+                    elements.startAdTaskBtn.innerHTML = '<span class="loading"></span> Loading Ad...';
+                    tg.HapticFeedback.impactOccurred('medium');
+                    
+                    if (typeof show_9708054 === 'function') {
+                        show_9708054('pop').then(() => {
+                            appState.balance += adReward;
+                            appState.totalEarnings += adReward;
+                            appState.adsWatched++;
+                            appState.dailyTasksCompleted++;
+                            
+                            if (userData && userData.id) {
+                                const adData = {
+                                    type: 'ad_completed',
+                                    userId: userData.id,
+                                    reward: adReward,
+                                    timestamp: new Date().toISOString()
+                                };
+                                tg.sendData(JSON.stringify(adData));
+                            }
+                            
+                            tg.showAlert(`🎉 Congratulations! You earned ${adReward} SHIB!`);
+                            tg.HapticFeedback.notificationOccurred('success');
+                            updateUI();
+                        }).catch(e => {
+                            tg.showAlert('❌ Ad could not be loaded. Please try again.');
+                            tg.HapticFeedback.notificationOccurred('error');
+                        }).finally(() => {
+                            updateUI();
+                        });
+                    } else {
+                        setTimeout(() => {
+                            tg.showAlert('❌ Ad system is not available. Please try again later.');
+                            updateUI();
+                        }, 2000);
+                    }
+                } else {
+                    tg.showAlert('⏰ You have reached your daily ad limit! Come back tomorrow.');
+                    tg.HapticFeedback.notificationOccurred('warning');
+                }
+            });
+
+            elements.requestWithdrawalBtn.addEventListener('click', () => {
+                const withdrawAmount = parseFloat(elements.withdrawAmount.value);
+                const binanceId = elements.binanceId.value.trim();
+                const minWithdrawal = 500;
+
+                if (isNaN(withdrawAmount) || withdrawAmount < minWithdrawal) {
+                    tg.showAlert(`💰 Minimum withdrawal amount is ${minWithdrawal.toLocaleString()} SHIB.`);
+                    return;
+                }
+                if (withdrawAmount > appState.balance) {
+                     tg.showAlert('❌ Insufficient balance for withdrawal.');
+                     return;
+                }
+                if (binanceId.length === 0) {
+                    tg.showAlert('🏦 Please enter your Binance User ID.');
+                    return;
+                }
+                
+                const withdrawalData = {
+                    type: 'withdrawal_request',
+                    userId: userData ? userData.id : null,
+                    userInfo: userData || null,
+                    amount: withdrawAmount,
+                    binanceId: binanceId,
+                    timestamp: new Date().toISOString()
+                };
+                
+                tg.sendData(JSON.stringify(withdrawalData));
+                tg.showAlert(`🚀 Withdrawal request for ${withdrawAmount.toLocaleString()} SHIB sent successfully!`);
+                tg.HapticFeedback.notificationOccurred('success');
+                
+                appState.balance -= withdrawAmount;
+                elements.withdrawAmount.value = '';
+                elements.binanceId.value = '';
+                updateUI();
+            });
+            
+            elements.claimBonusBtn.addEventListener('click', () => {
+                const today = new Date();
+                const lastClaim = appState.lastBonusClaim ? new Date(appState.lastBonusClaim) : null;
+                
+                if (lastClaim && isSameDay(today, lastClaim)) {
+                    tg.showAlert("⏰ You have already claimed your daily bonus today!");
+                    return;
+                }
+                
+                const bonusAmount = 25;
+                appState.balance += bonusAmount;
+                appState.totalEarnings += bonusAmount;
+                appState.lastBonusClaim = today.toISOString();
+                
+                if (userData && userData.id) {
+                    const bonusData = {
+                        type: 'daily_bonus_claimed',
+                        userId: userData.id,
+                        amount: bonusAmount,
+                        timestamp: today.toISOString()
+                    };
+                    tg.sendData(JSON.stringify(bonusData));
+                }
+                
+                tg.showAlert(`🎁 Congratulations! You claimed your daily bonus of ${bonusAmount} SHIB!`);
+                tg.HapticFeedback.notificationOccurred('success');
+                updateUI();
+            });
+
+            updateUI();
+            showView('home-view');
+
+            window.addEventListener('beforeunload', saveState);
+        });
+    </script>
+</body>
+  </html>
